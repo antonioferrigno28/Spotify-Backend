@@ -50,4 +50,24 @@ const fetchUserInfo = (req, res) => {
     });
 };
 
-module.exports = { validateAccess, fetchUserInfo };
+const fetchTopArtists = (req, res) => {
+  const access_token = req.query.access_token; // O recuperato dalla sessione
+
+  fetch("https://api.spotify.com/v1/me/top/artists", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Spotify user top artists:", data); // Verifica cosa ricevi dalla API
+      res.json(data); // Invia i dati come risposta
+    })
+    .catch((error) => {
+      console.error("Error fetching user artists:", error);
+      res.status(500).json({ error: "Error fetching user artists" });
+    });
+};
+
+module.exports = { validateAccess, fetchUserInfo, fetchTopArtists };
