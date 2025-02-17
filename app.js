@@ -4,6 +4,8 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
+const { APP_HOST, APP_PORT, FRONTEND_URL } = process.env;
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(
